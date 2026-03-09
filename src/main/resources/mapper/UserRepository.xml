@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.repository.UserRepository">
+
+  <resultMap id="userResultMap" type="com.example.demo.domain.User">
+    <id property="userId" column="user_id"/>
+    <result property="password" column="password"/>
+    <result property="name" column="name"/>
+    <result property="createdAt" column="created_at"/>
+    <result property="ipAddress" column="ip_address"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.example.demo.domain.User">
+    INSERT INTO users (
+      user_id,
+      password,
+      name,
+      created_at,
+      ip_address
+    ) VALUES (
+      #{userId},
+      #{password},
+      #{name},
+      #{createdAt},
+      #{ipAddress}
+    )
+  </insert>
+
+  <select id="findByUserId" resultMap="userResultMap">
+    SELECT
+      user_id,
+      password,
+      name,
+      created_at,
+      ip_address
+    FROM users
+    WHERE user_id = #{userId}
+  </select>
+
+  <update id="update" parameterType="com.example.demo.domain.User">
+    UPDATE users
+    SET
+      password = #{password},
+      name = #{name}
+    WHERE user_id = #{userId}
+  </update>
+
+  <delete id="deleteByUserId">
+    DELETE FROM users
+    WHERE user_id = #{userId}
+  </delete>
+
+</mapper>
